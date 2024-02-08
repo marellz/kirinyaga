@@ -4,7 +4,7 @@
 
         <!-- Name -->
         <div>
-            <x-form.input :label="__('Name')"  :errors="$errors->get('name')" id="name"class="block mt-1 w-full" type="text"
+            <x-form.input :label="__('Name')" :errors="$errors->get('name')" id="name" class="block mt-1 w-full" type="text"
                 name="name" :value="old('name')" required autofocus autocomplete="name" />
         </div>
 

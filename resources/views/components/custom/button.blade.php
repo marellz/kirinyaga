@@ -10,7 +10,7 @@
 <button
     {{ $attributes->merge([
         'type' => 'submit',
-        'class' => 'inline-flex items-center rounded-md font-semibold text-xs focus:ring-2 focus:outline-none focus:ring-offset-2 px-4 py-2 transition ease-in-out duration-150 tracking-widest '. $variants[$variant],
+        'class' => 'inline-flex items-center rounded-md font-semibold text-sm focus:ring-2 focus:outline-none focus:ring-offset-2 px-4 py-2 transition ease-in-out duration-150'. $variants[$variant],
     ]) }}>
     <span>
         {{ $slot }}
