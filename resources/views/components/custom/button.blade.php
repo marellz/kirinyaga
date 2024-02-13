@@ -1,7 +1,7 @@
 @props(['variant' => 'primary'])
 @php
     $variants = [
-        'primary' => ' bg-gray-800 border-transparent text-white hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-indigo-500',
+        'primary' => ' bg-red-crayola border-transparent text-white hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-indigo-500',
         'secondary' => 'border border-gray-300 hover:bg-gray-50 focus:ring-indigo-500 disabled:opacity-25',
         'danger' => 'border border-transparent bg-red-600  text-white uppercase hover:bg-red-500 active:bg-red-700 focus:ring-red-500',
     ];
