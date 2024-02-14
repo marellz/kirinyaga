@@ -8,13 +8,16 @@
             class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
             :disabled="disabled"
             :required="required"
-            :class="{'border-red-500': errors}"
+            :class="{'border-red-500': error}"
             :placeholder="placeholder"
             :rows="rows"
+            :name="name"
             v-model="model"
         ></textarea>
 
-        <slot name="errors" s/>
+       <form-error v-if="error">
+            {{  error }}
+        </form-error>
     </div>
 </template>
 <script setup>
@@ -24,7 +27,7 @@ const props = defineProps({
         type: String,
         default: null,
     },
-    type: {
+    name: {
         type: String,
         default: "text",
     },
@@ -36,9 +39,9 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    errors: {
-        type: Boolean,
-        default: false,
+    error: {
+        type: String,
+        default: null,
     },
     placeholder: {
         type: String,

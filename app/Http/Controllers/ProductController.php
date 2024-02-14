@@ -31,13 +31,12 @@ class ProductController extends Controller
             'category' => $category,
             'subcategory' => $subcategory
         ]);
-
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         //
         $categories = Category::all();
@@ -55,17 +54,18 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:products',
             'short_info' => 'required|string|max:1024',
-            'category_id' => 'exists:categories|required',
-            'subcategory_id' => 'exists:subcategories',
-            'price' => 'number|required',
+            'category_id' => 'required|exists:categories,id|',
+            'subcategory_id' => 'exists:subcategories,id',
+            'price' => 'required|numeric',
             'description' => 'string',
             'in_stock' => 'boolean',
             'visible' => 'boolean',
         ]);
 
-        $request->merge(['slug' => Str::slug($request->get('title'))]);
 
-        $created = Product::create($request->only([
+        $request->merge(['slug' => Str::slug($request->get('name'))]);
+
+        $product = Product::create($request->only([
             "name",
             "slug",
             "short_info",
@@ -77,7 +77,9 @@ class ProductController extends Controller
             "visible",
         ]));
 
-        return view('products', ['product' => 'product', 'success' => $created]);
+        return redirect()
+            ->route('products')
+            ->with('message', 'Successfully added!');;
     }
 
     /**
@@ -118,19 +120,19 @@ class ProductController extends Controller
         }
 
         $request->validate([
-            'name' => 'required|string|max:255|unique:products',
+            'name' => 'required|string|max:255',
             'short_info' => 'required|string|max:1024',
-            'category_id' => 'exists:categories|required',
-            'subcategory_id' => 'exists:subcategories',
-            'price' => 'number|required',
+            'category_id' => 'required|exists:categories,id',
+            'subcategory_id' => 'exists:subcategories,id',
+            'price' => 'required|numeric',
             'description' => 'string',
             'in_stock' => 'boolean',
             'visible' => 'boolean',
         ]);
 
-        $request->merge(['slug' => Str::slug($request->get('title'))]);
+        $request->merge(['slug' => Str::slug($request->get('name'))]);
 
-        $updated = Product::create($request->only([
+        $updated = $product->update($request->only([
             "name",
             "slug",
             "short_info",
@@ -146,7 +148,9 @@ class ProductController extends Controller
             abort(500, 'Error updating product');
         }
 
-        return view('products.show', ['product' => $product, 'message' => 'Updated successfully']);
+        return redirect()
+            ->route('product.show', [$product])
+            ->with('status', 'Updated successfully');
     }
 
     /**
@@ -155,26 +159,22 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
-        if (!$product->exists()) {
+        if (!$product) {
             abort(404);
-        }
-
-        try {
-            //code...
-        } catch (\Throwable $th) {
         }
 
         foreach ($product->photos as $photo) {
             $photo->delete();
-            # code...
         }
-
+        
         $deleted = $product->delete();
 
-        if ($deleted) {
+        if (!$deleted) {
             abort(500, 'Error deleting product');
         }
 
-        return redirect()->route('products', ['message' => 'Product successfully deleted']);
+        return redirect()
+            ->route('products')
+            ->with('message', 'Product successfully deleted');
     }
 }

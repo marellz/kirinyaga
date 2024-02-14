@@ -4,6 +4,12 @@
         <div class="space-y-10">
             <div class="">
                 <x-layout.banner>
+                    <div class="flex justify-end space-x-3">
+                        <a href="{{ route('product.edit', [$product]) }}">
+                            <x-custom.button variant="secondary">Edit product</x-custom.button>
+                        </a>
+                    </div>
+
                     <x-type.page-title>
                         {{ $product->name }}
                     </x-type.page-title>
@@ -21,18 +27,28 @@
                     <x-custom.button>Purchase</x-custom.button>
                 </div>
             </div>
+
             <div>
-                <div class="splide product-images" role="group" aria-label="Product images">
-                    <div class="splide__track">
-                        <ul class="splide__list">
-                            @foreach ($product->photos as $photo)
-                                <li class="splide__slide flex items-center">
-                                    <img class="object-cover lg:w-96 h-96 rounded" src="{{ $photo->url }}" alt="">
-                                </li>
-                            @endforeach
-                        </ul>
+                @if (count($product->photos))
+                    <div class="splide product-images" role="group" aria-label="Product images">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                @foreach ($product->photos as $photo)
+                                    <li class="splide__slide flex items-center">
+                                        <img class="object-cover lg:w-96 h-96 rounded" src="{{ $photo->url }}"
+                                            alt="">
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @else
+                <div>
+                    <div class="py-5 text-center">
+                        <p class="text-xl">No photos added.</p>
                     </div>
                 </div>
+                @endif
             </div>
             <div class="">
                 <div class="bg-white border rounded-xl">
@@ -48,6 +64,13 @@
                             {{ $product->description }}
                         </p>
                     </div>
+                </div>
+                <div class="flex justify-end space-x-3 py-10">
+                    <form method="post" action="{{ route('product.delete', [$product]) }}">
+                        @method('delete')
+                        @csrf
+                        <x-custom.button variant="danger">Delete product</x-custom.button>
+                    </form>
                 </div>
             </div>
         </div>

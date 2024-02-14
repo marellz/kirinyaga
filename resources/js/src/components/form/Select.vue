@@ -6,22 +6,34 @@
         <select
             :id="id"
             class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-            :class="{ 'border-red-500': errors }"
+            :class="{ 'border-red-500': error }"
             :disabled="disabled"
             :required="required"
+            :name="name"
             v-model="model"
             @change="onSelect"
         >
+        <option value="" disabled>{{ placeholder }}</option>
             <slot />
         </select>
 
-        <slot name="errors" />
+        <form-error v-if="error">
+            {{  error }}
+        </form-error>
     </div>
 </template>
 <script lang="ts" setup>
 import { onMounted } from "vue";
 const props = defineProps({
     label: {
+        type: String,
+        default: null,
+    },
+    name: {
+        type: String,
+        default: null,
+    },
+    placeholder: {
         type: String,
         default: null,
     },
@@ -33,9 +45,9 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    errors: {
-        type: Boolean,
-        default: false,
+    error: {
+        type: String,
+        default: null,
     },
     modelValue: {
         type: String,
@@ -53,6 +65,8 @@ const onSelect = () => {
 onMounted(() => {
     if (props.modelValue) {
         model.value = props.modelValue;
+    } else {
+        model.value = null
     }
 });
 </script>

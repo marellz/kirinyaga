@@ -3,7 +3,10 @@
         label="Category"
         :model-value="categoryId"
         @select="onSelectCategory"
-        v-model="selectedCategory"
+        v-model:category="selectedCategory"
+        name="category_id"
+        placeholder="Select product category"
+        :error="categoryError"
     >
         <template v-if="categories.length">
             <option
@@ -19,8 +22,10 @@
     <form-select
         label="Subcategory"
         :model-value="subcategoryId"
-        v-model="selectedSubcategory"
+        v-model:subcategory="selectedSubcategory"
         :disabled="loadingSubcategories"
+        name="subcategory_id"
+        placeholder="Select product subcategory"
     >
         <option
             :value="subcategory.id"
@@ -40,6 +45,10 @@ const props = defineProps({
         default: null,
     },
     categoryId: {
+        type: String,
+        default: null,
+    },
+    categoryError: {
         type: String,
         default: null,
     },

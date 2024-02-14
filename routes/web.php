@@ -37,14 +37,12 @@ Route::prefix('/products')->group(function () {
     Route::get('category/{category}/{subcategory}', [SubcategoryController::class, 'show'])->name('subcategory');
 });
 
-
-
 Route::prefix('/product')->group(function () {
     Route::get('/{product}', [ProductController::class, 'show'])->name('product.show');
     Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
     Route::post('/', [ProductController::class, 'store'])->name('product.store');
     Route::patch('/{product}', [ProductController::class, 'update'])->name('product.update');
-    Route::delete('/{product}', [ProductController::class, 'delete'])->name('product.delete');
+    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('product.delete');
 });
 
 Route::middleware('auth')->group(function () {

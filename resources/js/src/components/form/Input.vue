@@ -6,15 +6,18 @@
         <input
             :type="type"
             :id="id"
+            :name="name"
             class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
             :disabled="disabled"
             :required="required"
-            :class="{'border-red-500': errors}"
+            :class="{'border-red-500': error}"
             :placeholder="placeholder"
             v-model="model"
         />
 
-        <slot name="errors" s/>
+        <form-error v-if="error">
+            {{  error }}
+        </form-error>
     </div>
 </template>
 <script lang="ts" setup>
@@ -28,6 +31,10 @@ const props = defineProps({
         type: String,
         default: "text",
     },
+    name: {
+        type: String,
+        default: "",
+    },
     required: {
         type: Boolean,
         default: false,
@@ -36,9 +43,9 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    errors: {
-        type: Boolean,
-        default: false,
+    error: {
+        type: String,
+        default: null,
     },
     placeholder: {
         type: String,

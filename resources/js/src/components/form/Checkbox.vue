@@ -10,6 +10,7 @@
                 :required="required"
                 :value="inputValue"
                 v-model="model"
+                :name="name"
             />
             <div>
                 <slot>
@@ -26,6 +27,10 @@
 import { onMounted } from "vue";
 const props = defineProps({
     label: {
+        type: String,
+        default: null,
+    },
+    name: {
         type: String,
         default: null,
     },
@@ -46,7 +51,7 @@ const props = defineProps({
         default: null,
     },
     inputValue: {
-        type: String,
+        type: [Boolean, String],
         default: null,
     },
 });
