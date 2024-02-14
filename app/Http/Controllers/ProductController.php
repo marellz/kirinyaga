@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -32,6 +31,7 @@ class ProductController extends Controller
             'category' => $category,
             'subcategory' => $subcategory
         ]);
+
     }
 
     /**
@@ -41,8 +41,9 @@ class ProductController extends Controller
     {
         //
         $categories = Category::all();
+        $product = new Product();
 
-        return view('products.form', ['categories' => $categories]);
+        return view('products.form', ['categories' => $categories, 'product' => $product]);
     }
 
     /**
@@ -101,7 +102,9 @@ class ProductController extends Controller
             abort(404);
         }
 
-        return view('products.show', ['product' => $product]);
+        $categories = Category::all();
+
+        return view('products.form', ['product' => $product, 'categories' => $categories]);
     }
 
     /**

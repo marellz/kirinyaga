@@ -3,7 +3,6 @@
 
 @php 
 $unavailable = !$product->in_stock;
-
 @endphp
 
 <div class="@if($unavailable) opacity-75 @endif">
