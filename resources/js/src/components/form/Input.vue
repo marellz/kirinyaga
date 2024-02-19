@@ -12,6 +12,7 @@
             :required="required"
             :class="{'border-red-500': error}"
             :placeholder="placeholder"
+            :autocomplete="autocomplete"
             v-model="model"
         />
 
@@ -34,6 +35,10 @@ const props = defineProps({
     name: {
         type: String,
         default: "",
+    },
+    autocomplete: {
+        type: String,
+        default: null,
     },
     required: {
         type: Boolean,

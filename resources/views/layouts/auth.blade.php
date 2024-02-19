@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('body')
-    <div class="min-h-screen flex flex-col items-center pt-6 sm:pt-40 bg-gray-100 px-4">
+    <div class="min-h-screen flex flex-col items-center pt-6 sm:pt-40 bg-gray-100 px-4" id="app">
         <div>
             <a href="/">
                 <x-img.logo class="w-20 h-20 fill-current text-gray-500" />

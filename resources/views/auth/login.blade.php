@@ -7,14 +7,14 @@
 
         <!-- Email Address -->
         <div>
-            <x-form.input :label="__('Email')" :errors="$errors->get('email')" id="email" class="block mt-1 w-full" type="email"
-                name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <form-input label="Email" error="{{ $errors->first('email') }}" id="email" class="block mt-1 w-full"
+                type="email" name="email" model-value="{{old('email')}}" required autofocus autocomplete="username" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-form.input :label="__('Password')" id="password" class="block mt-1 w-full" type="password" name="password"
-                required autocomplete="current-password" :errors="$errors->get('password')" />
+            <form-input label="Password" id="password" class="block mt-1 w-full" type="password" name="password"
+                required autocomplete="current-password" errors="{{$errors->first('password')}}" />
         </div>
 
         <!-- Remember Me -->
