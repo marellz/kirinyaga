@@ -21,15 +21,15 @@
         $links = $generalLinks->merge($guestLinks);
     }
 
-
-    function routeActive($route){
+    function routeActive($route)
+    {
         return request()->routeIs($route) || request()->path() == $route;
     }
-    
 
 @endphp
 
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 sticky top-0 z-20">
+@props(['theme' => 'bg-white border-b border-gray-100'])
+<nav x-data="{ open: false }" class="{{ $theme }} sticky top-0 z-20">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -46,7 +46,7 @@
                 @foreach ($links as $key => $link)
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav.link :href="$link" :active="routeActive($link)">
-                            {{ $key}}
+                            {{ $key }}
                         </x-nav.link>
                     </div>
                 @endforeach
@@ -115,9 +115,9 @@
         <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 @foreach ($links as $key => $link)
-                <x-nav.responsive-link :href="$link" :active="routeActive($link)">
-                   {{ $key}}
-                </x-nav.responsive-link>
+                    <x-nav.responsive-link :href="$link" :active="routeActive($link)">
+                        {{ $key }}
+                    </x-nav.responsive-link>
                 @endforeach
             </div>
 
