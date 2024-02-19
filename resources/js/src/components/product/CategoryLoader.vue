@@ -109,6 +109,9 @@ const loadSubcategories = async (category: string | number) => {
 onMounted(() => {
     loadCategories();
 
+    selectedCategory.value = null
+    selectedSubcategory.value = null
+
     if (props.categoryId) {
         selectedCategory.value = props.categoryId
 

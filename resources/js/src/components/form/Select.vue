@@ -13,7 +13,7 @@
             v-model="model"
             @change="onSelect"
         >
-        <option value="" disabled>{{ placeholder }}</option>
+        <option :value="null" disabled>{{ placeholder }}</option>
             <slot />
         </select>
 
