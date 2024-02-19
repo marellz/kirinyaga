@@ -32,6 +32,7 @@ Route::get('/dashboard', function () { // admin only
 
 Route::prefix('/products')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('products');
+    Route::post('/', [ProductController::class, 'store'])->name('product.store');
     Route::get('/create', [ProductController::class, 'create'])->name('products.create');
     Route::get('category/{category}', [CategoryController::class, 'show'])->name('category');
     Route::get('category/{category}/{subcategory}', [SubcategoryController::class, 'show'])->name('subcategory');
@@ -40,7 +41,6 @@ Route::prefix('/products')->group(function () {
 Route::prefix('/product')->group(function () {
     Route::get('/{product}', [ProductController::class, 'show'])->name('product.show');
     Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
-    Route::post('/', [ProductController::class, 'store'])->name('product.store');
     Route::patch('/{product}', [ProductController::class, 'update'])->name('product.update');
     Route::delete('/{product}', [ProductController::class, 'destroy'])->name('product.delete');
 });
