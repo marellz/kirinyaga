@@ -3,6 +3,9 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Dash\ProductController as DashProductController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashCategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
 use Illuminate\Support\Facades\Route;
@@ -20,28 +23,31 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/dashboard', function () { // admin only
-    return view('dashboard');
+Route::prefix('dashboard')->name('dash.')->group(function () { // admin only
+
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
 
     Route::prefix('/categories')->group(function () {
-        Route::get('/', [ProductController::class, 'index']);
+        Route::get('/', [DashCategoryController::class, 'index'])->name('categories');
     });
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+    Route::prefix('products')->group(function () {
+        Route::get('/', [DashProductController::class, 'index'])->name('products');
+        Route::post('/', [DashProductController::class, 'store'])->name('product.store');
+        Route::get('/create', [DashProductController::class, 'create'])->name('products.create');
+        Route::get('/{product}/edit', [DashProductController::class, 'edit'])->name('product.edit');
+        Route::patch('/{product}', [DashProductController::class, 'update'])->name('product.update');
+        Route::delete('/{product}', [DashProductController::class, 'destroy'])->name('product.delete');
+    });
+})->middleware(['auth', 'verified'])->name('dash.');
 
 
 Route::prefix('/products')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('products');
-    Route::post('/', [ProductController::class, 'store'])->name('product.store');
-    Route::get('/create', [ProductController::class, 'create'])->name('products.create');
-    Route::get('category/{category}', [CategoryController::class, 'show'])->name('category');
-    Route::get('category/{category}/{subcategory}', [SubcategoryController::class, 'show'])->name('subcategory');
 });
 
 Route::prefix('/product')->group(function () {
     Route::get('/{product}', [ProductController::class, 'show'])->name('product.show');
-    Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
-    Route::patch('/{product}', [ProductController::class, 'update'])->name('product.update');
-    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('product.delete');
 });
 
 Route::middleware('auth')->group(function () {

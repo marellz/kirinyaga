@@ -7,7 +7,7 @@
     ]);
 
     $authLinks = collect([
-        'Dashboard' => route('dashboard'),
+        'Dashboard' => route('dash.home'),
     ]);
 
     $guestLinks = collect([
