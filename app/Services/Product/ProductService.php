@@ -6,6 +6,9 @@ namespace App\Services\Product;
 
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductResourceCollection;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Models\Product;
 
 class ProductService
@@ -19,8 +22,10 @@ class ProductService
         $this->model = $product;
     }
 
-    public function query($parameters)
+    public function query($request) : AnonymousResourceCollection
     {
+        $parameters = $request->only(['category', 'subcategory', 'query']);
+
         $products = Product::where('visible', true);
 
         if (isset($parameters['category'])) {
@@ -31,7 +36,14 @@ class ProductService
             }
         }
 
-        return $products->paginate();
+        if(isset($parameters['query'])){
+            $products = $products->where('name', 'LIKE', '%'.$parameters['query'].'%')
+            ->orWhere('short_info', 'LIKE', '%' . $parameters['query'] . '%')
+            ->orWhere('description', 'LIKE', '%' . $parameters['query'] . '%');
+        }
+
+        return ProductResource::collection($products->paginate());
+
     }
 
     public function store(ProductStoreRequest $request): Product
