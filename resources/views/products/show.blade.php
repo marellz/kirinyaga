@@ -4,11 +4,13 @@
         <div class="space-y-10">
             <div class="">
                 <x-layout.banner>
+                    @auth
                     <div class="flex justify-end space-x-3">
-                        <a href="{{ route('product.edit', [$product]) }}">
+                        <a href="{{ route('dash.product.edit', [$product]) }}">
                             <x-custom.button variant="secondary">Edit product</x-custom.button>
                         </a>
                     </div>
+                    @endauth
 
                     <x-type.page-title>
                         {{ $product->name }}
