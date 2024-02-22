@@ -1,8 +1,7 @@
 start:
 	concurrently "php artisan serve" "npm run dev"
 
-up: 
-	start
+up: start
 
 # api
 api-install:
@@ -17,8 +16,7 @@ migrate: api-config
 key-generate:
 	php artisan key:generate
 
-api-setup: 
-	api-install api-key-generate api-config migrate
+api-setup: api-install api-key-generate api-config migrate
 
 # front
 front-install: 
