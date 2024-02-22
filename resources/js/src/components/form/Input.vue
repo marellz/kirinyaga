@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col">
-        <label :for="id" class="block font-medium text-sm text-gray-700 mb-2">
+        <label v-if="label" :for="id" class="block font-medium text-sm text-gray-700 mb-2">
             {{ label }}
         </label>
         <input
@@ -38,7 +38,7 @@ const props = defineProps({
     },
     autocomplete: {
         type: String,
-        default: null,
+        default: "off",
     },
     required: {
         type: Boolean,
