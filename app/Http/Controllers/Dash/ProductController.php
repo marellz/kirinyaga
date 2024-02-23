@@ -9,8 +9,8 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Product\ProductService;
-use App\Http\Requests\ProductStoreRequest;
-use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Requests\Product\ProductStoreRequest;
+use App\Http\Requests\Product\ProductUpdateRequest;
 
 class ProductController extends Controller
 {

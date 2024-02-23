@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductStoreRequest;
-use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Requests\Product\ProductStoreRequest;
+use App\Http\Requests\Product\ProductUpdateRequest;
 use App\Models\Product;
 use App\Services\Product\ProductService;
 
