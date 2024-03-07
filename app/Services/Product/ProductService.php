@@ -13,16 +13,12 @@ use App\Models\Product;
 
 class ProductService
 {
-
-    protected $model;
-
-
-    public function __construct(Product $product)
+    public function __construct(
+        private readonly Product $model)
     {
-        $this->model = $product;
     }
 
-    public function query($request) : AnonymousResourceCollection
+    public function query($request): AnonymousResourceCollection
     {
         $parameters = $request->only(['category', 'subcategory', 'query']);
 
@@ -36,14 +32,13 @@ class ProductService
             }
         }
 
-        if(isset($parameters['query'])){
-            $products = $products->where('name', 'LIKE', '%'.$parameters['query'].'%')
-            ->orWhere('short_info', 'LIKE', '%' . $parameters['query'] . '%')
-            ->orWhere('description', 'LIKE', '%' . $parameters['query'] . '%');
+        if (isset($parameters['query'])) {
+            $products = $products->where('name', 'LIKE', '%' . $parameters['query'] . '%')
+                ->orWhere('short_info', 'LIKE', '%' . $parameters['query'] . '%')
+                ->orWhere('description', 'LIKE', '%' . $parameters['query'] . '%');
         }
 
         return ProductResource::collection($products->paginate());
-
     }
 
     public function store(ProductStoreRequest $request): Product
