@@ -14,8 +14,8 @@
                         'path' => route('dash.products'), // route
                     ],
                     [
-                        'label' => '',
-                        'path' => '', // route
+                        'label' => 'Categories',
+                        'path' => route('dash.categories'), // route
                     ],
                 ];
             @endphp
