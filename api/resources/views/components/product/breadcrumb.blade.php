@@ -7,15 +7,17 @@
     <span>
         <x-icons.chevron-right size="h-4 w-4" />
     </span>
-    <a href="{{ route('category', $product->category->slug) }}">
-        {{ $product->category->name }}</a>
+    <a href="{{ route('products', ['query'=> ['category' => $product->category->slug]]) }}">
+        {{ $product->category->name }}
+    </a>
+    
     @if ($product->subcategory_id)
-        <span>
-            <x-icons.chevron-right size="h-4 w-4" />
-        </span>
-        <a
-            href="{{ route('subcategory', ['category' => $product->category->slug, 'subcategory' => $product->subCategory->slug]) }}">
-            {{ $product->subcategory->name }}</a>
+    <span>
+        <x-icons.chevron-right size="h-4 w-4" />
+    </span>
+    <a
+        href="{{ route('products', ['query'=> ['category' => $product->category->slug, 'subcategory' => $product->subcategory->slug]]) }}">
+        {{ $product->subcategory->name }}</a>
     @endif
 
 </div>

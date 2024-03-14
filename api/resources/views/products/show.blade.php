@@ -67,13 +67,13 @@
                         </p>
                     </div>
                 </div>
-                <div class="flex justify-end space-x-3 py-10">
+                {{-- <div class="flex justify-end space-x-3 py-10">
                     <form method="post" action="{{ route('product.delete', [$product]) }}">
                         @method('delete')
                         @csrf
                         <x-custom.button variant="danger">Delete product</x-custom.button>
                     </form>
-                </div>
+                </div> --}}
             </div>
         </div>
 
