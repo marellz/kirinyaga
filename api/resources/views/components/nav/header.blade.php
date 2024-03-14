@@ -21,10 +21,10 @@
         $links = $generalLinks->merge($guestLinks);
     }
 
-    function routeActive($route)
-    {
-        return request()->routeIs($route) || request()->path() == $route;
-    }
+    // function routeActive($route)
+    // {
+    //     return request()->routeIs($route) || request()->path() == $route;
+    // }
 
 @endphp
 
@@ -45,7 +45,7 @@
                 <!-- Navigation Links -->
                 @foreach ($links as $key => $link)
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav.link :href="$link" :active="routeActive($link)">
+                        <x-nav.link :href="$link" :active="url()->current() == $link">
                             {{ $key }}
                         </x-nav.link>
                     </div>
@@ -115,7 +115,7 @@
         <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 @foreach ($links as $key => $link)
-                    <x-nav.responsive-link :href="$link" :active="routeActive($link)">
+                    <x-nav.responsive-link :href="$link" :active="url()->current() == $link">
                         {{ $key }}
                     </x-nav.responsive-link>
                 @endforeach
