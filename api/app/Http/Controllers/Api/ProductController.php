@@ -31,7 +31,7 @@ class ProductController extends Controller
     {
         //
         $products = $this->service->query($parameters);
-        return $this->respond(['products'=> $products]);
+        return $this->respond($products);
     }
 
     /**
