@@ -14,7 +14,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Noto Sans", ...defaultTheme.fontFamily.sans],
+                sans: ["Outfit", 'sans-serif', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 gunmetal: "#1b2f33ff",
