@@ -4,7 +4,7 @@ services:
   front:
     build: ./front
     ports:
-      - "8080:5173"
+      - "8080:3000"
       - "24678:24678"
     volumes:
       - ./front:/app
