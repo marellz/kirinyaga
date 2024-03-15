@@ -1,25 +1,27 @@
 <template>
-    <div class="flex flex-col">
-        <label v-if="label" :for="id" class="block font-medium text-sm text-gray-700 mb-2">
-            {{ label }}
-        </label>
-        <input
-            :type="type"
-            :id="id"
-            :name="name"
-            class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-            :disabled="disabled"
-            :required="required"
-            :class="{'border-red-500': error}"
-            :placeholder="placeholder"
-            :autocomplete="autocomplete"
-            v-model="model"
-        />
-
-        <form-error v-if="error">
-            {{  error }}
-        </form-error>
-    </div>
+    <client-only>
+        <div class="flex flex-col">
+            <label v-if="label" :for="id" class="block font-medium text-sm text-gray-700 mb-2">
+                {{ label }}
+            </label>
+            <input
+                :type="type"
+                :id="id"
+                :name="name"
+                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                :disabled="disabled"
+                :required="required"
+                :class="{'border-red-500': error}"
+                :placeholder="placeholder"
+                :autocomplete="autocomplete"
+                v-model="model"
+            />
+    
+            <form-error v-if="error">
+                {{  error }}
+            </form-error>
+        </div>
+    </client-only>
 </template>
 <script lang="ts" setup>
 import { onMounted } from 'vue';
