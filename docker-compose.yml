@@ -1,6 +1,16 @@
 version: '3.8'
 
 services:
+  front:
+    build: ./front
+    ports:
+      - "8080:5173"
+      - "24678:24678"
+    volumes:
+      - ./front:/app
+    depends_on:
+      - api
+  
   api:
     build: 
       context: './api'
