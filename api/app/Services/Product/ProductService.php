@@ -72,6 +72,8 @@ class ProductService
          * newest
          * alpha_first
          * alpha_last
+         * price_lowest
+         * price_highest
          */
 
         $sortBy = $request->get('sort_by');
@@ -100,6 +102,14 @@ class ProductService
 
                 case 'alpha_last':
                     $products = $products->orderBy('name', 'desc');
+                    break;
+
+                case 'price_lowest':
+                    $products = $products->orderBy('price', 'asc');
+                    break;
+
+                case 'price_highest':
+                    $products = $products->orderBy('price', 'desc');
                     break;
 
 
