@@ -1,4 +1,4 @@
-FROM node:lts-alpine as build-stage
+FROM node:lts-alpine 
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . .
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "run", "dev-host" ]
 
 # CMD [ "node", ".output/server/index.mjs" ]
 # FROM nginx:stable-alpine as production-stage
