@@ -21,92 +21,64 @@ class SubcategoryController extends Controller
     }
 
 
+    public function index()
+    {
+        $subcategories = $this->service->all();
+        $data['items'] = $subcategories;
+        return $this->respond($data);
+    }
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Category $category)
+    public function create()
     {
         //
-        $newCategory = new Subcategory();
-        return view('dash.categories.form', [
-            'category' => $newCategory,
-            'parentCategory' => $category,
-            'categories' => $this->categoryService->list()
-        ]);
+        return $this->respond([]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Category $category, SubcategoryStoreRequest $request)
+    public function store(SubcategoryStoreRequest $request)
     {
         //
         $subcategory = $this->service->store($request);
 
-        if(!$subcategory->exists()){
-            abort(500,'Error creating subcategory');
-        }
-
-        return redirect()
-        ->route('dash.categories')
-        ->with(
-            'message',
-            'Subcategory created',
-        );
+        $data['item'] = $subcategory;
+        return $this->respond($data);
     }
 
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category, Subcategory $subcategory)
+    public function edit(string $id)
     {
         //
-        return view('dash.categories.form', [
-            'category' => $subcategory,
-            'parentCategory' => $category,
-            'categories' => $this->categoryService->list()
-        ]);
+        return $this->respond([]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Category $category, SubcategoryUpdateRequest $request, Subcategory $subcategory)
+    public function update(string $id, SubcategoryUpdateRequest $request)
     {
         //
-        $updated = $this->service->update($subcategory, $request);
+        $updated = $this->service->update($id, $request);
 
-
-        if (!$updated) {
-            abort(500, 'Error creating subcategory');
-        }
-
-        return redirect()
-            ->route('dash.categories')
-            ->with(
-                'message',
-                'Subcategory updated',
-            );
+        $data['updated'] = $updated;
+        return $this->respond($data);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Subcategory $subcategory)
+    public function destroy(string $id)
     {
         //
-        $deleted = $this->service->destroy($subcategory);
+        $deleted = $this->service->destroy($id);
 
-        if (!$deleted) {
-            abort(500, 'Error creating subcategory');
-        }
-        
-        return redirect()
-            ->route('dash.categories')
-            ->with(
-                'message',
-                'Subcategory deleted',
-            );
+        $data['deleted'] = $deleted;
+        return $this->respond($data);
     }
 }

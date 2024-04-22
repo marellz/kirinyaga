@@ -19,14 +19,16 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = $this->service->list();
-        return view('dash.categories.list', ['categories' => $categories]);
+        $categories = $this->service->all();
+        $data['categories'] = $categories;
+        return $this->respond($data);
     }
 
     public function create()
     {
         $category = new Category();
-        return view('dash.categories.form', ['category' => $category]);
+        $data['category'] = $category;
+        return $this->respond($data);
     }
 
 
@@ -38,9 +40,8 @@ class CategoryController extends Controller
             abort(500, 'Error deleting category');
         }
 
-        return redirect()
-            ->route('dash.categories')
-            ->with('message', 'Successfully added!');
+        $data['item'] = $category;
+        return $this->respond($data);
     }
 
     public function update(Category $category, CategoryUpdateRequest $request)
@@ -51,9 +52,8 @@ class CategoryController extends Controller
             abort(500, 'Error deleting category');
         }
 
-        return redirect()
-            ->route('dash.categories')
-            ->with('message', 'Successfully updated!');
+        $data['updated'] = $updated;
+       return $this->respond($data);
     }
 
     public function destroy(Category $category)

@@ -16,7 +16,7 @@ class CategoryService
     ) {
     }
 
-    public function list()
+    public function all()
     {
         $categories = Category::all();
 
@@ -42,6 +42,7 @@ class CategoryService
     public function update(string $id, CategoryUpdateRequest $request)
     {
         $category = $this->get($id);
+        
         $validated = $request->safe()->only($this->model->fillable);
 
         $category->update($validated);

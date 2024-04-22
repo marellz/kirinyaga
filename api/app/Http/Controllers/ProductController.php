@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ProductStoreRequest;
 use App\Http\Requests\Product\ProductUpdateRequest;
@@ -31,11 +29,10 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create()
     {
         //
-        $data['categories'] = $this->categoryService->list();
-        return $this->respond($data);
+        return $this->respond([]);
     }
 
     /**
@@ -45,58 +42,41 @@ class ProductController extends Controller
     {
         $product = $this->service->store($request);
 
-        if ($product->exists()) {
-            abort(500, 'Error creating product');
-        }
-
-        return redirect()
-            ->route('dash.products')
-            ->with('message', 'Successfully added!');;
+        $data['item'] = $product;
+        return $this->respond($data);
     }
 
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit()
     {
         //
-        $categories = Category::all();
-
-        return view('dash.products.form', ['product' => $product, 'categories' => $categories]);
+        return $this->respond([]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProductUpdateRequest $request, Product $product)
+    public function update(string $id, ProductUpdateRequest $request)
     {
         //
-        $updated = $this->service->update($product, $request);
+        $updated = $this->service->update($id, $request);
 
-        if (!$updated) {
-            abort(500, 'Error updating product');
-        }
-
-        return redirect()
-            ->route('dash.products', [$updated])
-            ->with('status', 'Product updated successfully');
+        $data['updated'] = $updated;
+        return $this->respond($data);
     }
 
     /**
      * Remove the specified resource from storage.
      */
 
-    public function destroy(Product $product)
+    public function destroy(string $id)
     {
-        $deleted = $this->service->destroy($product);
+        $deleted = $this->service->destroy($id);
 
-        if (!$deleted) {
-            abort(500, 'Error deleting product');
-        }
-
-        return redirect()
-            ->back()
-            ->with('message', 'Product successfully deleted');
+        $data['deleted'] = $deleted;
+        return $this->respond($data);
     }
 }

@@ -14,8 +14,8 @@ use App\Models\Product;
 class ProductService
 {
     public function __construct(
-        private readonly Product $model)
-    {
+        private readonly Product $model
+    ) {
     }
 
     public function query($request): AnonymousResourceCollection
@@ -41,6 +41,12 @@ class ProductService
         return ProductResource::collection($products->paginate());
     }
 
+    public function get(string $id): Product
+    {
+        $product = Product::findOrFail($id);
+        return $product;
+    }
+
     public function store(ProductStoreRequest $request): Product
     {
         $validated = $request->safe()->only($this->model->fillable);
@@ -51,8 +57,9 @@ class ProductService
     }
 
 
-    public function update(Product $product, ProductUpdateRequest $request): Product
+    public function update(string $id, ProductUpdateRequest $request): Product
     {
+        $product = $this->get($id);
         $validated = $request->safe()->only($this->model->fillable);
 
         $product->update($validated);
@@ -61,9 +68,9 @@ class ProductService
     }
 
 
-    public function destroy(Product $product): bool|null
+    public function destroy(string $id): bool|null
     {
-
+        $product = $this->get($id);
         foreach ($product->photos as $photo) {
             $photo->delete();
         }
