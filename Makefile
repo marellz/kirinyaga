@@ -1,30 +1,26 @@
-start:
-	concurrently "php artisan serve" "npm run dev"
+up:
+	docker-compose up
 
-up: start
+rebuild:
+	docker-compose up --build
 
 # api
-api-install:
-	cp .env.example .env && composer install
-
-config:
-	php artisan config:cache
+config-cache:
+	docker exec -ti kirinyaga-front php artisan config:cache
 
 migrate: api-config
-	php artisan migrate
+	docker exec -ti kirinyaga-front php artisan migrate
+
+migrate-fresh:
+	docker exec -ti kirinyaga-front php artisan migrate:fresh
+
+db-seed:
+	docker exec -ti kirinyaga-front php artisan db:seed
 
 key-generate:
-	php artisan key:generate
+	docker exec -ti kirinyaga-front php artisan key:generate
 
-api-setup: api-install api-key-generate api-config migrate
-
-# front
-front-install: 
-	npm run install
-
-setup: 
-	api-setup front-install
+api-setup: key-generate config-cache migrate db-seed
 
 # other
-db-refresh:
-	php artisan migrate:fresh && php artisan db:seed
+db-refresh: migrate-fresh db-seed
