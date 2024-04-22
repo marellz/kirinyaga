@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('product_photos', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
             $table->text('url');
-            $table->foreignId('product_id');
+            $table->foreignUuid('product_id');
             $table->text('caption')->nullable();
             $table->timestamps();
         });

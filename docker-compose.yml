@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   front:
+    container_name: kirinyaga-front
     build: ./front
     ports:
       - "8080:3000"
@@ -12,7 +13,8 @@ services:
       - api
   
   api:
-    build: 
+    container_name: kirinyaga-api
+    build:
       context: './api'
       dockerfile: Dockerfile
     ports:

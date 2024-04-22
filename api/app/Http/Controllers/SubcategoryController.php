@@ -1,31 +1,32 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Product\ProductStoreRequest;
-use App\Http\Requests\Product\ProductUpdateRequest;
-use App\Services\Product\ProductService;
+use App\Http\Requests\Subcategory\SubcategoryStoreRequest;
+use App\Http\Requests\Subcategory\SubcategoryUpdateRequest;
+use App\Models\Category;
+use App\Models\Subcategory;
 use App\Services\Category\CategoryService;
+use App\Services\Subcategory\SubcategoryService;
+use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class SubcategoryController extends Controller
 {
+
     public function __construct(
-        private readonly ProductService $service,
         private readonly CategoryService $categoryService,
+        private readonly SubcategoryService $service
     ) {
     }
 
+
     public function index(Request $request)
     {
-        $products = $this->service->query($request);
-        $data['items'] = $products;
+        $subcategories = $this->service->all($request);
+        $data['items'] = $subcategories;
         return $this->respond($data);
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -36,23 +37,24 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the a resource.
+     * Show a resource.
      */
     public function show(string $id)
     {
         //
         $data['item'] = $this->service->get($id);
-        return $this->respond($data);
+        return $this->respond([]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductStoreRequest $request)
+    public function store(SubcategoryStoreRequest $request)
     {
-        $product = $this->service->store($request);
+        //
+        $subcategory = $this->service->store($request);
 
-        $data['item'] = $product;
+        $data['item'] = $subcategory;
         return $this->respond($data);
     }
 
@@ -60,7 +62,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit(string $id)
     {
         //
         return $this->respond([]);
@@ -69,7 +71,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(string $id, ProductUpdateRequest $request)
+    public function update(string $id, SubcategoryUpdateRequest $request)
     {
         //
         $updated = $this->service->update($id, $request);
@@ -81,9 +83,9 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-
     public function destroy(string $id)
     {
+        //
         $deleted = $this->service->destroy($id);
 
         $data['deleted'] = $deleted;

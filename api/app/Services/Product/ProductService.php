@@ -7,15 +7,14 @@ namespace App\Services\Product;
 use App\Http\Requests\Product\ProductStoreRequest;
 use App\Http\Requests\Product\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
-use App\Http\Resources\ProductResourceCollection;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Models\Product;
 
 class ProductService
 {
     public function __construct(
-        private readonly Product $model)
-    {
+        private readonly Product $model
+    ) {
     }
 
     public function query($request): AnonymousResourceCollection
@@ -41,29 +40,37 @@ class ProductService
         return ProductResource::collection($products->paginate());
     }
 
-    public function store(ProductStoreRequest $request): Product
+    public function get(string $id): ProductResource
+    {
+        $product = Product::findOrFail($id);
+        return new ProductResource($product);
+    }
+
+    public function store(ProductStoreRequest $request): ProductResource
     {
         $validated = $request->safe()->only($this->model->fillable);
 
         $product = $this->model->create($validated);
 
-        return $product;
+        return new ProductResource($product);
     }
 
 
-    public function update(Product $product, ProductUpdateRequest $request): Product
+    public function update(string $id, ProductUpdateRequest $request): Product
     {
+        $product = $this->get($id);
         $validated = $request->safe()->only($this->model->fillable);
 
-        $product->update($validated);
+        $updated = $product->update($validated);
 
-        return $product;
+        return $updated;
+        
     }
 
 
-    public function destroy(Product $product): bool|null
+    public function destroy(string $id): bool|null
     {
-
+        $product = $this->get($id);
         foreach ($product->photos as $photo) {
             $photo->delete();
         }

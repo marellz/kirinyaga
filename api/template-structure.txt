@@ -1,0 +1,43 @@
+/components/
+    custom/
+        - button
+        - tag
+    utils/
+        -dropdown+item
+        - modal
+    product/
+        -breadcrumb
+        -item
+    nav/
+        -item
+        -header
+        -header
+    img/
+        -logo
+    icons/
+    dash/
+        -link
+
+
+/views
+    - dash/
+        - categories/
+            -list
+            -form
+        - products/
+            -list 
+            -form
+
+    - products 
+        -list
+        -form
+
+    - profile **
+        - vendor/pagination
+
+/layouts
+    - app
+    - auth
+    - dash
+    - home
+    - main

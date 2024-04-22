@@ -5,6 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "dev-host": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -20,6 +21,7 @@
     "@pinia/nuxt": "^0.5.1",
     "@tailwindcss/forms": "^0.5.7",
     "autoprefixer": "^10.4.18",
+    "axios": "^1.6.8",
     "pinia": "^2.1.7",
     "postcss": "^8.4.35",
     "sass": "^1.72.0",

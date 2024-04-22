@@ -7,6 +7,7 @@ namespace App\Services\Category;
 use App\Http\Requests\Category\CategoryStoreRequest;
 use App\Http\Requests\Category\CategoryUpdateRequest;
 use App\Models\Category;
+use GuzzleHttp\Psr7\Request;
 
 class CategoryService
 {
@@ -16,11 +17,18 @@ class CategoryService
     ) {
     }
 
-    public function list()
+    public function all()
     {
         $categories = Category::all();
 
         return $categories;
+    }
+
+    public function get(string $id)
+    {
+        $category = Category::findOrFail($id);
+
+        return $category;
     }
 
     public function store(CategoryStoreRequest $request)
@@ -32,8 +40,10 @@ class CategoryService
         return $category;
     }
 
-    public function update(Category $category, CategoryUpdateRequest $request)
+    public function update(string $id, CategoryUpdateRequest $request)
     {
+        $category = $this->get($id);
+        
         $validated = $request->safe()->only($this->model->fillable);
 
         $category->update($validated);
@@ -41,8 +51,10 @@ class CategoryService
         return $category;
     }
 
-    public function destroy(Category $category)
+    public function destroy(string $id)
     {
+        $category = $this->get($id);
+        
         foreach ($category->subCategories as $subcategory) {
             $subcategory->delete();
         }
