@@ -27,8 +27,9 @@ class ProductSeeder extends Seeder
             }
 
             // no subcategory
-            Product::factory()->create([
+            Product::factory(2)->create([
                 'category_id' => $cat->id,
+                'subcategory_id' => null
             ]);
         }
     }
