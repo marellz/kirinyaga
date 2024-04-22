@@ -19,25 +19,97 @@ class ProductService
 
     public function query($request): AnonymousResourceCollection
     {
-        $parameters = $request->only(['category', 'subcategory', 'query']);
+
+        /**
+         * FILTERS:
+         * 
+         *  'category',
+         *  'subcategory',
+         *  'price_max',
+         *  'price_min',
+         *  'query' // search term
+         * 
+         */
+
+
+
+        $category = $request->get('category_id');
+        $subcategory = $request->get('subcategory_id');
+        $query = $request->get('query');
+        $maxPrice = $request->get('price_max');
+        $minPrice = $request->get('price_min');
+
 
         $products = Product::where('visible', true);
 
-        if (isset($parameters['category'])) {
-            $products = $products->where('category_id', $parameters['category']);
+        if ($category) {
+            $products = $products->where('category_id', $category);
+        }
 
-            if (isset($parameters['subcategory'])) {
-                $products = $products->where('subcategory_id', $parameters['subcategory']);
+        if ($subcategory) {
+            $products = $products->where('subcategory_id', $subcategory);
+        }
+
+        if ($query) {
+            $products = $products->where('name', 'LIKE', '%' . $query . '%')
+                ->orWhere('short_info', 'LIKE', '%' . $query . '%')
+                ->orWhere('description', 'LIKE', '%' . $query . '%');
+        }
+
+        if ($maxPrice) {
+            $products = $products->where('price', '<=', $maxPrice);
+        }
+
+        if ($minPrice) {
+            $products = $products->where('price', '>=', $minPrice);
+        }
+
+        /**
+         * SORT_BY:
+         * price_asc
+         * price_desc
+         * oldest
+         * newest
+         * alpha_first
+         * alpha_last
+         */
+
+        $sortBy = $request->get('sort_by');
+
+        if ($sortBy) {
+            switch ($sortBy) {
+                case 'price_asc':
+                    $products = $products->orderBy('price', 'asc');
+                    break;
+
+                case 'price_desc':
+                    $products = $products->orderBy('price', 'desc');
+                    break;
+
+                case 'oldest':
+                    $products = $products->orderBy('created_at', 'asc');
+                    break;
+
+                case 'newest':
+                    $products = $products->orderBy('created_at', 'desc');
+                    break;
+
+                case 'alpha_first':
+                    $products = $products->orderBy('name', 'asc');
+                    break;
+
+                case 'alpha_last':
+                    $products = $products->orderBy('name', 'desc');
+                    break;
+
+
+                default:
+                    $products = $products->orderBy('created_at', 'desc');
+                    break;
             }
         }
 
-        if (isset($parameters['query'])) {
-            $products = $products->where('name', 'LIKE', '%' . $parameters['query'] . '%')
-                ->orWhere('short_info', 'LIKE', '%' . $parameters['query'] . '%')
-                ->orWhere('description', 'LIKE', '%' . $parameters['query'] . '%');
-        }
-
-        return ProductResource::collection($products->paginate());
+        return ProductResource::collection($products->get());
     }
 
     public function get(string $id): ProductResource
@@ -64,7 +136,6 @@ class ProductService
         $updated = $product->update($validated);
 
         return $updated;
-        
     }
 
 
