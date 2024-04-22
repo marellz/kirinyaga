@@ -19,7 +19,7 @@ class SubcategoryFactory extends Factory
     public function definition(): array
     {
         $category = Category::inRandomOrder()->first();
-        $name = fake()->words(2, true);
+        $name = 'Subcategory ' .  random_int(1111, 9999);
         return [
             //
             "name" => $name,

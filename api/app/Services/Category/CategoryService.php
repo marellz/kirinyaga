@@ -55,7 +55,7 @@ class CategoryService
     {
         $category = $this->get($id);
         
-        foreach ($category->subCategories as $subcategory) {
+        foreach ($category->subcategories as $subcategory) {
             $subcategory->delete();
         }
 
