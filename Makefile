@@ -23,6 +23,9 @@ db-seed:
 key-generate:
 	docker exec -ti kirinyaga-api php artisan key:generate
 
+tinker:
+	docker exec -ti kirinyaga-api php artisan tinker
+
 api-setup: key-generate config-cache migrate db-seed
 
 # other
