@@ -21,9 +21,9 @@ class SubcategoryController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $subcategories = $this->service->all();
+        $subcategories = $this->service->all($request);
         $data['items'] = $subcategories;
         return $this->respond($data);
     }
@@ -33,6 +33,16 @@ class SubcategoryController extends Controller
     public function create()
     {
         //
+        return $this->respond([]);
+    }
+
+    /**
+     * Show a resource.
+     */
+    public function show(string $id)
+    {
+        //
+        $data['item'] = $this->service->get($id);
         return $this->respond([]);
     }
 

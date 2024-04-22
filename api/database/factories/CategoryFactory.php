@@ -20,8 +20,8 @@ class CategoryFactory extends Factory
         $name = fake()->words(2, true);
         return [
             //
-            "name" => 'Category ' . fake()->randomNumber(),
-            "slug" => Str::slug($name),
+            "name" => 'Category ' . fake()->randomNumber(2),
+            "slug" => Str::slug(fake()->randomNumber(2)),
             "description" => fake()->sentences(3, true),
         ];
     }

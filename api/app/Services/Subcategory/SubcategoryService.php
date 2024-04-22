@@ -8,6 +8,7 @@ use App\Http\Requests\Subcategory\SubcategoryStoreRequest;
 use App\Http\Requests\Subcategory\SubcategoryUpdateRequest;
 use App\Models\Category;
 use App\Models\Subcategory;
+use Illuminate\Http\Request;
 
 class SubcategoryService
 {
@@ -16,11 +17,15 @@ class SubcategoryService
     ) {
     }
 
-    public function all()
+    public function all(Request $request)
     {
-        $subcategory = Subcategory::all();
+        $subcategories = Subcategory::all();
 
-        return $subcategory;
+        if($request->has('category_id')){
+            $subcategories = Subcategory::where('category_id', $request->get('category_id'))->get();
+        }
+
+        return $subcategories;
     }
 
     public function get(string $id)

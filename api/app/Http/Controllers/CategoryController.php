@@ -7,7 +7,7 @@ use App\Http\Requests\Category\CategoryStoreRequest;
 use App\Http\Requests\Category\CategoryUpdateRequest;
 use App\Models\Category;
 use App\Services\Category\CategoryService;
-
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -26,8 +26,13 @@ class CategoryController extends Controller
 
     public function create()
     {
-        $category = new Category();
-        $data['category'] = $category;
+        return $this->respond([]);
+    }
+
+    public function get(string $id)
+    {
+        $category = $this->service->get($id);
+        $data['item'] = $category;
         return $this->respond($data);
     }
 

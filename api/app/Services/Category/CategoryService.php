@@ -7,6 +7,7 @@ namespace App\Services\Category;
 use App\Http\Requests\Category\CategoryStoreRequest;
 use App\Http\Requests\Category\CategoryUpdateRequest;
 use App\Models\Category;
+use GuzzleHttp\Psr7\Request;
 
 class CategoryService
 {

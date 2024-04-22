@@ -36,6 +36,16 @@ class ProductController extends Controller
     }
 
     /**
+     * Show the a resource.
+     */
+    public function show(string $id)
+    {
+        //
+        $data['item'] = $this->service->get($id);
+        return $this->respond($data);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(ProductStoreRequest $request)
