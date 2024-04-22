@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Dash;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CategoryStoreRequest;
 use App\Http\Requests\Category\CategoryUpdateRequest;
 use App\Models\Category;
 use App\Services\Category\CategoryService;
-use Illuminate\Http\Request;
+
 
 class CategoryController extends Controller
 {

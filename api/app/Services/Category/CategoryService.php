@@ -23,6 +23,13 @@ class CategoryService
         return $categories;
     }
 
+    public function get(string $id)
+    {
+        $category = Category::findOrFail($id);
+
+        return $category;
+    }
+
     public function store(CategoryStoreRequest $request)
     {
         $validated = $request->safe()->only($this->model->fillable);
@@ -32,8 +39,9 @@ class CategoryService
         return $category;
     }
 
-    public function update(Category $category, CategoryUpdateRequest $request)
+    public function update(string $id, CategoryUpdateRequest $request)
     {
+        $category = $this->get($id);
         $validated = $request->safe()->only($this->model->fillable);
 
         $category->update($validated);
@@ -41,8 +49,10 @@ class CategoryService
         return $category;
     }
 
-    public function destroy(Category $category)
+    public function destroy(string $id)
     {
+        $category = $this->get($id);
+        
         foreach ($category->subCategories as $subcategory) {
             $subcategory->delete();
         }
