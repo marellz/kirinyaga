@@ -17,12 +17,20 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         //
-        $category = Category::inRandomOrder()->first();
-        $subcategory = $category->subcategories->random();
+        foreach (Category::all() as $cat) {
 
-        Product::factory(20)->create([
-            'category_id' => $category->id,
-            'subcategory_id' => $subcategory->id,
-        ]);
+            foreach ($cat->subcategories as $subcat) {
+                Product::factory()->create([
+                    'category_id' => $cat->id,
+                    'subcategory_id' => $subcat->id,
+                ]);
+            }
+
+            // no subcategory
+            Product::factory(2)->create([
+                'category_id' => $cat->id,
+                'subcategory_id' => null
+            ]);
+        }
     }
 }

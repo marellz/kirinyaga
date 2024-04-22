@@ -32,6 +32,8 @@ class ProductResource extends JsonResource
             "description" => $this->description,
             "in_stock" => $this->in_stock > 0,
             "visible" => $this->visible > 0,
+            "created" => $this->created_at->toDateTimeString(),
+            "updated" => $this->updated_at->toDateTimeString(),
         ];
     }
 }

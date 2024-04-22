@@ -18,8 +18,10 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = fake()->company() . ' ' . fake()->lastName();
+    
+        $name = 'Product '. random_int(1111, 9999);
         $subcategory = Subcategory::inRandomOrder()->first();
+
         return [
             //
             "name" => $name,
