@@ -11,7 +11,7 @@ rebuild:
 config-cache:
 	docker exec -ti kirinyaga-api php artisan config:cache
 
-migrate: api-config
+migrate: config-cache
 	docker exec -ti kirinyaga-api php artisan migrate
 
 migrate-fresh:
